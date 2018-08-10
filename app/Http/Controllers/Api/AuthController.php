@@ -42,6 +42,9 @@ class AuthController extends ApiController
             'name' => request()->name,
             'email' => request()->email,
             'password' => bcrypt(request()->password),
+            'tel' => request()->tel,
+            'gender' => request()->gender,
+            'date_of_birth' => request()->date_of_birth,
         ]);
 
         $token = $user->createToken('WatNaiBann')->accessToken;
