@@ -5,9 +5,13 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
+use App\Transformer\UserTransformer;
+use Illuminate\Validation\Rule;
+use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends ApiController
 {
+
     public function login(Request $request)
     {
         $this->validate($request, [
@@ -30,20 +34,37 @@ class AuthController extends ApiController
         }
     }
 
+    public function loginWithFacebook(Request $request)
+    {
+        $user = Socialite::driver('facebook')->userFromToken($request->token);
+
+        return $user;
+    }
+
+    public function logout(Request $request)
+    {
+        auth()->user()->token()->revoke();
+
+        return $this->respondSuccess();
+    }
+
     public function register(Request $request)
     {
         $this->validate($request, [
             'name' => 'required|min:3|alpha',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6',
+            'gender' => ['required', Rule::in(['หญิง', 'ชาย'])],
+            'tel' => 'min:10|max:10',
+            'date_of_birth' => 'required|date|before:today',
         ]);
 
         $user = User::create([
             'name' => request()->name,
             'email' => request()->email,
             'password' => bcrypt(request()->password),
-            'tel' => request()->tel,
             'gender' => request()->gender,
+            'tel' => request()->tel,
             'date_of_birth' => request()->date_of_birth,
         ]);
 

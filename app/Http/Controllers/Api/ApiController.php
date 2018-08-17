@@ -182,7 +182,7 @@ class ApiController extends Controller
      */
     private function checkTransformer()
     {
-        if ($this->transformer === null || !$this->transformer instanceof Transformer) {
+        if ($this->transformer === null ) {
             throw new Exception('Invalid data transformer.');
         }
     }

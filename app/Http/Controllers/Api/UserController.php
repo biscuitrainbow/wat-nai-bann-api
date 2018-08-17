@@ -5,22 +5,41 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
+use App\Transformer\UserTransformer;
+use Illuminate\Validation\Rule;
 
-class UserController extends Controller
+class UserController extends ApiController
 {
+    public function __construct(UserTransformer $transformer)
+    {
+        $this->transformer = $transformer;
+    }
+
     public function detail()
     {
-        return auth()->user();
+        $user = auth()->user();
+        $user->token = $user->accessToken;
+
+        return $this->respondWithTransformer($user);
     }
 
     public function update(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|min:3|alpha',
-            'gender' => 'required|min:3|alpha',
-            'tel' => 'required|min:3|max:10',
-            'date_of_birth' => 'required|before:today',
+            'name' => 'required|min:3|',
+            'gender' => ['required', Rule::in(['หญิง', 'ชาย'])],
+            'tel' => 'max:10',
+            'date_of_birth' => 'required|date|before:today',
         ]);
 
+        $user = auth()->user();
+        $user->update([
+            'name' => $request->name,
+            'gender' => $request->gender,
+            'tel' => $request->tel,
+            'date_of_birth' => $request->date_of_birth,
+        ]);
+
+        return $this->respondSuccess();
     }
 }

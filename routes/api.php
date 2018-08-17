@@ -15,11 +15,18 @@ use Illuminate\Http\Request;
 
 Route::group(['namespace' => 'Api'], function () {
     Route::post('login', 'AuthController@login');
+    Route::post('login/facebook', 'AuthController@loginWithFacebook');
+
     Route::post('register', 'AuthController@register');
 
     Route::group(['middleware' => 'auth:api'], function () {
+        Route::post('logout', 'AuthController@logout');
+
         Route::get('user', 'UserController@detail');
         Route::put('user', 'UserController@update');
+
+        Route::get('news', 'NewsController@index');
+        Route::post('news', 'NewsController@store');
     });
 });
 
