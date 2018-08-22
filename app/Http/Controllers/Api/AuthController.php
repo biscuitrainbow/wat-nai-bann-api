@@ -27,6 +27,7 @@ class AuthController extends ApiController
         if (auth()->attempt($credentials)) {
             $user = auth()->user();
             $user->token = $user->createToken('WatNaiBann')->accessToken;
+            $user->age = $user->age;
 
             return $this->respond($user);
         } else {
@@ -36,9 +37,9 @@ class AuthController extends ApiController
 
     public function loginWithFacebook(Request $request)
     {
-        $user = Socialite::driver('facebook')->userFromToken($request->token);
+        $user = Socialite::driver('facebook')->userFromToken($request->fb_token);
 
-        return $user;
+        dump($user);
     }
 
     public function logout(Request $request)

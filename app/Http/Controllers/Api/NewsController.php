@@ -23,7 +23,7 @@ class NewsController extends ApiController
             'title' => 'required|min:3|',
             'content' => 'required|min:3|',
             'due_date' => 'date',
-            'cover' => 'url',
+            // 'cover' => 'url',
             'category' => ['required', Rule::in(['general', 'activity'])],
         ]);
 
@@ -32,6 +32,7 @@ class NewsController extends ApiController
             'title' => $request->title,
             'content' => $request->content,
             'due_date' => $request->due_date,
+            'location' => $request->location,
             'category' => $request->category,
             'cover' => $request->cover,
         ]);
