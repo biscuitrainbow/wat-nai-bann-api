@@ -27,6 +27,10 @@ Route::group(['namespace' => 'Api'], function () {
 
         Route::get('news', 'NewsController@index');
         Route::post('news', 'NewsController@store');
+
+        Route::get('activity', 'ActivityController@index');
+        Route::post('activity', 'ActivityController@store');
+
     });
 });
 
