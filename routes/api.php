@@ -27,9 +27,13 @@ Route::group(['namespace' => 'Api'], function () {
 
         Route::get('news', 'NewsController@index');
         Route::post('news', 'NewsController@store');
+        Route::put('news/{news}', 'NewsController@update');
+        Route::delete('news/{news}', 'NewsController@destroy');
 
         Route::get('activity', 'ActivityController@index');
         Route::post('activity', 'ActivityController@store');
+        Route::put('activity/{activity}', 'ActivityController@update');
+        Route::delete('activity/{activity}', 'ActivityController@destroy');
 
     });
 });

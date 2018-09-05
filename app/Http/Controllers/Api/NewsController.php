@@ -12,7 +12,7 @@ class NewsController extends ApiController
 {
     public function index()
     {
-        $news = News::orderBy('created_at','desc')->get();
+        $news = News::orderBy('created_at', 'desc')->get();
         return $this->respond($news);
     }
 
@@ -41,5 +41,35 @@ class NewsController extends ApiController
         $user->news()->save($news);
 
         return $this->respondCreated($news);
+    }
+
+
+    public function update(Request $request, News $news)
+    {
+        $this->validate($request, [
+            'title' => 'required|min:3|',
+            'content' => 'required|min:3|',
+            'due_date' => 'date',
+            // 'cover' => 'url',
+            'category' => ['required', Rule::in(['general', 'activity'])],
+        ]);
+
+
+        $news->update([
+            'title' => $request->title,
+            'content' => $request->content,
+            'due_date' => $request->due_date,
+            'location' => $request->location,
+            'category' => $request->category,
+            'cover' => $request->cover,
+        ]);
+
+
+        return $this->respondSuccess();
+    }
+
+    public function destroy(News $news){
+        $news->delete();
+        return $this->respondSuccess();
     }
 }

@@ -52,12 +52,11 @@ class AuthController extends ApiController
     public function register(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|min:3|alpha',
+            'name' => 'required|min:3',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6',
             'gender' => ['required', Rule::in(['หญิง', 'ชาย'])],
-            'tel' => 'min:10|max:10',
-            'date_of_birth' => 'required|date|before:today',
+            // 'date_of_birth' => 'date|before:today',
         ]);
 
         $user = User::create([
@@ -65,8 +64,8 @@ class AuthController extends ApiController
             'email' => request()->email,
             'password' => bcrypt(request()->password),
             'gender' => request()->gender,
-            'tel' => request()->tel,
-            'date_of_birth' => request()->date_of_birth,
+            // 'tel' => request()->tel,
+            // 'date_of_birth' => request()->date_of_birth,
         ]);
 
         $token = $user->createToken('WatNaiBann')->accessToken;
