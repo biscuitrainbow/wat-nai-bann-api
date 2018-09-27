@@ -13,6 +13,8 @@ class UserTransformer extends Transformer
             'gender' => $data['gender'],
             'tel' => $data['tel'],
             'date_of_birth' => $data['date_of_birth'],
+            'is_admin' => $data['is_admin'],
+
         ];
     }
 }

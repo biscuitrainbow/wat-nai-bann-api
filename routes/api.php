@@ -19,6 +19,9 @@ Route::group(['namespace' => 'Api'], function () {
 
     Route::post('register', 'AuthController@register');
 
+    Route::get('hashtag', 'TwitterController@fetchBaseHashtag');
+
+
     Route::group(['middleware' => 'auth:api'], function () {
         Route::post('logout', 'AuthController@logout');
 

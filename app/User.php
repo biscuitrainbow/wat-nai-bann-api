@@ -29,11 +29,15 @@ class User extends Authenticatable
     ];
 
 
-    public function news(){
-        return $this->hasMany(News::class,'user_id');
+    protected $casts = ['is_admin' => 'boolean'];
+
+    public function news()
+    {
+        return $this->hasMany(News::class, 'user_id');
     }
 
-    public function activities(){
-        return $this->hasMany(Activity::class,'user_id');
+    public function activities()
+    {
+        return $this->hasMany(Activity::class, 'user_id');
     }
 }
