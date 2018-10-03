@@ -38,6 +38,10 @@ Route::group(['namespace' => 'Api'], function () {
         Route::put('activity/{activity}', 'ActivityController@update');
         Route::delete('activity/{activity}', 'ActivityController@destroy');
 
+        Route::get('survey', 'SurveyController@index');
+        Route::post('survey', 'SurveyController@store');
+        Route::get('survey/user/{user}', 'SurveyController@userSurvey');
+
     });
 });
 

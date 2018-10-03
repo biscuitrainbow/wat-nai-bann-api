@@ -36,6 +36,11 @@ class User extends Authenticatable
         return $this->hasMany(News::class, 'user_id');
     }
 
+    public function surveys()
+    {
+        return $this->hasMany(Survey::class, 'user_id');
+    }
+
     public function activities()
     {
         return $this->hasMany(Activity::class, 'user_id');
