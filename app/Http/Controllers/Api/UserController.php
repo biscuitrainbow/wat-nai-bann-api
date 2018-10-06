@@ -27,7 +27,7 @@ class UserController extends ApiController
     {
         $this->validate($request, [
             'name' => 'required|min:3|',
-            'gender' => ['required', Rule::in(['หญิง', 'ชาย'])],
+            'gender' => ['required', Rule::in(['หญิง', 'ชาย', 'ไม่ระบุ'])],
         ]);
 
         $user = auth()->user();
